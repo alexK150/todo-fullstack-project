@@ -1,6 +1,10 @@
 package com.example.todofullstackproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -9,13 +13,21 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Task name is required")
     private String taskName;
+    @NotBlank(message = "Task identifier is required")
+    @Size(min = 4, max = 5, message = "Please use 4 or 5 characters")
+    @Column(updatable = false, unique = true)
     private String taskIdentifier;
+    @NotBlank(message = "Task description is required")
     private String taskDescription;
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date start_date;
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date end_date;
-
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date created_At;
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date updated_At;
 
     public Task() {
